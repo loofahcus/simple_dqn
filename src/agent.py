@@ -89,6 +89,8 @@ class Agent:
       self.step(1)
 
   def train(self, train_steps, epoch = 0):
+    import math
+    print_steps = math.ceil(0.01 * train_steps)
     # do not do restart here, continue from testing
     #self._restartRandom()
     # play given number of steps
@@ -107,13 +109,25 @@ class Agent:
       # increase number of training steps for epsilon decay
       self.total_train_steps += 1
 
+      # a simple process bar
+      if (i + 1) % print_steps == 0:
+        logger.info("  Train step = %d (%.2f%%)"
+                    % (i, 100 * (i + 1) / train_steps))
+
   def test(self, test_steps, epoch = 0):
+    import math
+    print_steps = math.ceil(0.01 * test_steps)
     # just make sure there is history_length screens to form a state
     self._restartRandom()
     # play given number of steps
     for i in xrange(test_steps):
       # perform game step
       self.step(self.exploration_rate_test)
+
+      # a simple process bar
+      if (i + 1) % print_steps == 0:
+        logger.info("  Test step = %d (%.2f%%)"
+                    % (i, 100 * (i + 1) / test_steps))
 
   def play(self, num_games):
     # just make sure there is history_length screens to form a state
