@@ -112,7 +112,7 @@ class Agent:
       # a simple process bar
       if (i + 1) % print_steps == 0:
         logger.info("  Train step = %d (%.2f%%)"
-                    % (i, 100 * (i + 1) / train_steps))
+                    % (i + 1, 100 * (i + 1) / train_steps))
 
   def test(self, test_steps, epoch = 0):
     import math
@@ -127,7 +127,7 @@ class Agent:
       # a simple process bar
       if (i + 1) % print_steps == 0:
         logger.info("  Test step = %d (%.2f%%)"
-                    % (i, 100 * (i + 1) / test_steps))
+                    % (i + 1, 100 * (i + 1) / test_steps))
 
   def play(self, num_games):
     # just make sure there is history_length screens to form a state
