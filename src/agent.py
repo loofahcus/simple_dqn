@@ -18,7 +18,7 @@ class Agent:
     self.exploration_rate_end = args.exploration_rate_end
     self.exploration_decay_steps = args.exploration_decay_steps
     self.exploration_rate_test = args.exploration_rate_test
-    self.total_train_steps = 0
+    self.total_train_steps = args.start_epoch * args.train_steps
 
     self.train_frequency = args.train_frequency
     self.train_repeat = args.train_repeat
@@ -137,3 +137,5 @@ class Agent:
       terminal = False
       while not terminal:
         action, reward, screen, terminal = self.step(self.exploration_rate_test)
+        # add experiences to replay memory for visualization
+        self.mem.add(action, reward, screen, terminal)
