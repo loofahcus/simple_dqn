@@ -48,14 +48,14 @@ class DeepQNetwork:
       l.parallelism = 'Disabled'
     self.model.initialize(self.input_shape[:-1], self.cost)
     if args.optimizer == 'rmsprop':
-      self.optimizer = RMSProp(learning_rate = args.learning_rate, 
-          decay_rate = args.decay_rate, 
+      self.optimizer = RMSProp(learning_rate = args.learning_rate,
+          decay_rate = args.decay_rate,
           stochastic_round = args.stochastic_round)
     elif args.optimizer == 'adam':
-      self.optimizer = Adam(learning_rate = args.learning_rate, 
+      self.optimizer = Adam(learning_rate = args.learning_rate,
           stochastic_round = args.stochastic_round)
     elif args.optimizer == 'adadelta':
-      self.optimizer = Adadelta(decay = args.decay_rate, 
+      self.optimizer = Adadelta(decay = args.decay_rate,
           stochastic_round = args.stochastic_round)
     else:
       assert false, "Unknown optimizer"
@@ -130,7 +130,8 @@ class DeepQNetwork:
     assert preq.shape == (self.num_actions, self.batch_size)
 
     # make copy of prestate Q-values as targets
-    targets = preq.asnumpyarray()
+    # It seems neccessary for cpu backend.
+    targets = preq.asnumpyarray().copy()
 
     # clip rewards between -1 and 1
     rewards = np.clip(rewards, self.min_reward, self.max_reward)
