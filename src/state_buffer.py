@@ -1,3 +1,4 @@
+import six
 import numpy as np
 
 class StateBuffer:
@@ -38,7 +39,7 @@ if __name__ == '__main__':
 
   import numpy as np
   mem = StateBuffer(args)
-  for i in xrange(args.loops):
+  for i in six.moves.xrange(args.loops):
     mem.add(np.zeros((args.screen_height, args.screen_width)))
     if i >= args.history_length:
       state = mem.getState()

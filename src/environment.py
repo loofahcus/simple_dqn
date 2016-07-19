@@ -36,31 +36,31 @@ class ALEEnvironment(Environment):
       if sys.platform == 'darwin':
         import pygame
         pygame.init()
-        self.ale.setBool('sound', False) # Sound doesn't work on OSX
+        self.ale.setBool(b'sound', False) # Sound doesn't work on OSX
       elif sys.platform.startswith('linux'):
-        self.ale.setBool('sound', True)
-      self.ale.setBool('display_screen', True)
+        self.ale.setBool(b'sound', True)
+      self.ale.setBool(b'display_screen', True)
 
-    self.ale.setInt('frame_skip', args.frame_skip)
-    self.ale.setFloat('repeat_action_probability', args.repeat_action_probability)
-    self.ale.setBool('color_averaging', args.color_averaging)
+    self.ale.setInt(b'frame_skip', args.frame_skip)
+    self.ale.setFloat(b'repeat_action_probability', args.repeat_action_probability)
+    self.ale.setBool(b'color_averaging', args.color_averaging)
 
     if args.random_seed:
-      self.ale.setInt('random_seed', args.random_seed)
+      self.ale.setInt(b'random_seed', args.random_seed)
 
     if args.record_screen_path:
       if not os.path.exists(args.record_screen_path):
-        logger.info("Creating folder %s" % args.record_screen_path)
+        logger.info(b"Creating folder %s" % args.record_screen_path)
         os.makedirs(args.record_screen_path)
-      logger.info("Recording screens to %s", args.record_screen_path)
-      self.ale.setString('record_screen_dir', args.record_screen_path)
+      logger.info(b"Recording screens to %s", args.record_screen_path)
+      self.ale.setString(b'record_screen_dir', args.record_screen_path)
 
     if args.record_sound_filename:
-      logger.info("Recording sound to %s", args.record_sound_filename)
-      self.ale.setBool('sound', True)
-      self.ale.setString('record_sound_filename', args.record_sound_filename)
+      logger.info(b"Recording sound to %s", args.record_sound_filename)
+      self.ale.setBool(b'sound', True)
+      self.ale.setString(b'record_sound_filename', args.record_sound_filename)
 
-    self.ale.loadROM(rom_file)
+    self.ale.loadROM(str.encode(rom_file))
 
     if args.minimal_action_set:
       self.actions = self.ale.getMinimalActionSet()

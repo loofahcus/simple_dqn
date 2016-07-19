@@ -1,3 +1,4 @@
+import six
 import logging
 logging.basicConfig(format='%(asctime)s %(message)s')
 
@@ -117,7 +118,7 @@ if args.play_games:
   if args.visualization_file:
     from visualization import visualize
     # use states recorded during gameplay. NB! Check buffer size, that it can accomodate one game!
-    states = [agent.mem.getState(i) for i in xrange(agent.history_length, agent.mem.current - agent.random_starts)]
+    states = [agent.mem.getState(i) for i in six.moves.xrange(agent.history_length, agent.mem.current - agent.random_starts)]
     logger.info("Collected %d game states" % len(states))
     import numpy as np
     states = np.array(states)
@@ -133,7 +134,7 @@ if args.random_steps:
   stats.write(0, "random")
 
 # loop over epochs
-for epoch in xrange(args.start_epoch, args.epochs):
+for epoch in six.moves.xrange(args.start_epoch, args.epochs):
   logger.info("Epoch #%d" % (epoch + 1))
 
   if args.train_steps:
